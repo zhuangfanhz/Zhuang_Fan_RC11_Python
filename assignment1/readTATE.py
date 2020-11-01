@@ -10,21 +10,73 @@ from io import BytesIO
 
 # Define the ArtTate class, with all attributes that you find usefull
 class ArtTate:
-    # Define the initialise function accordingly
-    def __init__(self):
-        # delete pass when you start editing, this is a placeholder keyword to say that nothing happens
-        pass
+    def __init__(self, id, year, acquisitionYear, width, depth, height, imageUrl, artist):
+        self.id = id
+        self.year = year
+        self.acquisitionYear = acquisitionYear
+        self.width = width
+        self.depth = depth
+        self.height = height
+        self.imageUrl = imageUrl
+        self.artist = artist
+        self.imagePath = ''
 
-    # Define a function that prints a description
+        if self.width:
+            try:
+                self.width = float(self.width) * 10
+            except ValueError:
+                self.width = 10
+        else:
+            self.width = 10
+
+        if self.height:
+            try:
+                self.height = float(self.width) * 10
+            except ValueError:
+                self.height = 10
+        else:
+            self.height = 10
+
+        if self.depth:
+            try:
+                self.depth = float(self.width) * 10
+            except ValueError:
+                self.depth = 10
+        else:
+            self.depth = 10
+
     def describe(self):
-        # delete pass when you start editing, this is a placeholder keyword to say that nothing happens
-        pass
+        print("artist:" + self.artist, "id:" + self.id,"year:" + self.year, "acquisitionYear:" + self.acquisitionYear, "width:" + str(self.width), "depth:" + str(self.depth), "height:" + str(self.height))
 
-    # implement the get image function that saves the image to the specified folder
     def getImageFile(self):
-        # delete pass when you start editing, this is a placeholder keyword to say that nothing happens
-        pass
+        if self.imageUrl:
+            response = requests.get(self.imageUrl)
+            try:
+                im = Image.open(BytesIO(response.content))
+            except OSError:
+                return None
+            path = "C:\\Users\\hp\\Documents\\GitHub\Zhuang_Fan_RC11_Python\\Assignment1\\Artimages\\ "+ "id_"+ self.id+ "_year_"+ self.year+ ".jpg"
+            self.imagePath = path
+            im.save(path, "JPEG")
 
-# Read in the rows of the artwork_data.csv file into a list of ArtTate objects
+artPieces = []
+with open("C:\\Users\\hp\\Documents\\GitHub\\Zhuang_Fan_RC11_Python\Assignment1\\CSVFiles\\artwork_data.csv", encoding = 'utf-8-sig') as artFile:
+    artReader = csv.DictReader(artFile)
 
-# write a loop that saves all artwork thumbnails of an artist to a specific folder
+    for row in artReader:
+        id = row['id']
+        year = row['year']
+        acquisitionYear = row['acquisitionYear']
+        width = row['width']
+        height = row['height']
+        depth = row['depth']
+        imageUrl = row['thumbnailUrl']
+        artist = row['artist']
+
+        if width or depth or height:
+            artPiece = ArtTate(id, year, acquisitionYear, width, depth, height, imageUrl, artist)
+            artPieces.append(artPiece)
+
+for art in artPieces:
+    if "1921" in art.acquisitionYear:
+        art.getImageFile()
