@@ -38,12 +38,12 @@ class ArtMoMA:
                 im = Image.open(BytesIO(response.content))
             except OSError:
                 return None
-            path = "C:\Users\hp\Documents\GitHub\Zhuang_Fan_RC11_Python\Assignment1\Artimages\ "
+            path = "C:\\Users\\hp\\Documents\\GitHub\Zhuang_Fan_RC11_Python\\Assignment1\\Artimages\\ "+ self.id+ ".jpg"
             self.imagePath = path
             im.save(path, "JPEG")
 
 artPieces = []
-with open("C:\Users\hp\Documents\GitHub\Zhuang_Fan_RC11_Python\Assignment1\CSVFiles\Artworks.csv", encoding = 'utf-8-sig') as artFile:
+with open("C:\\Users\\hp\\Documents\\GitHub\\Zhuang_Fan_RC11_Python\Assignment1\\CSVFiles\\Artworks.csv", encoding = 'utf-8-sig') as artFile:
     artReader = csv.DictReader(artFile)
 
     for row in artReader:
