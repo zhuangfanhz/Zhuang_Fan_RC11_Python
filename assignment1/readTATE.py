@@ -23,7 +23,7 @@ class ArtTate:
 
         if self.width:
             try:
-                self.width = float(self.width) * 10
+                self.width = float(self.width)
             except ValueError:
                 self.width = 10
         else:
@@ -31,7 +31,7 @@ class ArtTate:
 
         if self.height:
             try:
-                self.height = float(self.width) * 10
+                self.height = float(self.width)
             except ValueError:
                 self.height = 10
         else:
@@ -39,7 +39,7 @@ class ArtTate:
 
         if self.depth:
             try:
-                self.depth = float(self.width) * 10
+                self.depth = float(self.width) 
             except ValueError:
                 self.depth = 10
         else:
